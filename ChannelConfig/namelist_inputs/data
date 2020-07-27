@@ -93,8 +93,9 @@
  &PARM03
 # Start from the beginning of time.
  nIter0=       0,
-# 100 yr run (1 yr = 51840 dt)
- nTimeSteps =   5184001,
+# 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+ nTimeSteps =   144,
+#nTimeSteps =   5184001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
@@ -116,19 +117,24 @@
 # Dump file frequency.
 # in seconds, assuming 360 day years
 # Every 1 day.
- dumpFreq= 86400.,
+# dumpFreq= 86400.,
+# Every 10 mins (i.e. each time step)
+ dumpFreq= 600.,
 
 #-------------------------------------------------------------------------------
 # Averaging frequency.
 
 #  Every day.
- taveFreq=   86400.,
+# taveFreq=   86400.,
+# Every 10 mins (i.e. each time step)
+ taveFreq=   600.,
 
 #-------------------------------------------------------------------------------
 # Monitor statistics frequency.
 
 # Every 10 days.
- monitorFreq= 864000.,
+# monitorFreq= 864000.,
+ monitorFreq= 86400.,
 
 #-------------------------------------------------------------------------------
 # Forcing timescales - turn it all off.
@@ -150,7 +156,8 @@
  delR=10.0000, 11.3752, 12.9394, 14.7188, 16.7429, 19.0453, 21.6643, 24.6435,
       28.0323, 31.8872, 36.2722, 41.2602, 46.9342, 53.3883, 60.7301, 69.0814,
       78.5812, 89.3874, 101.6795, 115.6621, 131.5674, 149.6600, 170.2406,
-      193.6514, 220.8552, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000
+      193.6514, 220.8552, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 
+      250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000
  xgOrigin=-4800.E3,
  ygOrigin=-1000.E3,
  dYspacing=10.E3,
