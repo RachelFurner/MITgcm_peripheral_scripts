@@ -45,7 +45,7 @@ C     Nr  :: No. points in Z for full process domain.
       INTEGER Nr
       PARAMETER (
      &           sNx =  40,
-     &           sNy =  50,
+     &           sNy =  52,
      &           OLx =   4,
      &           OLy =   4,
      &           nSx =   1,

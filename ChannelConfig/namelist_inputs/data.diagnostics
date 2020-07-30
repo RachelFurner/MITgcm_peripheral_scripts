@@ -13,16 +13,16 @@
  &diagnostics_list
 # INSTANTANEOUS DIAGNOSTIC OUTPUT #
 # My standard diagnostics.
-  frequency(1) = -6220800000.,
-   timephase(1) = 0.,
-   filename(1)  = 'diag',
-   fields(1,1)  = 'CONVADJ ', 'GM_Kwx  ', 'GM_Kwy  ', 'WRHOMASS', 'VRHOMASS',
-                  'RHOAnoma', 'momVort3',
+#  frequency(1) = -6220800000.,
+#   timephase(1) = 0.,
+#   filename(1)  = 'diag',
+#   fields(1,1)  = 'CONVADJ ', 'WRHOMASS', 'VRHOMASS',
+#                  'RHOAnoma', 'momVort3',
 # My user-defined diagnostics.
-  frequency(2) = -311040000.,
-   timephase(2) = 0.,
-   filename(2) = 'my_diag',
-   fields(1,2) = 'SDIAG1  ',
+#  frequency(2) = -311040000.,
+#   timephase(2) = 0.,
+#   filename(2) = 'my_diag',
+#   fields(1,2) = 'SDIAG1  ',
 # DIC surface flux diagnostics.
 #  frequency(3) = -2592000.,
 #   timephase(3) = 0.,

@@ -1,6 +1,6 @@
 # Packages (lines beginning "#" are comments)
  &PACKAGES
- useGMRedi=.TRUE.,
+ useGMRedi=.FALSE.,
 #-------------------------------------------------------------------------------
 # Set to .TRUE. to use biogeochemistry.
  usePTRACERS=.FALSE.,
@@ -8,5 +8,5 @@
 #-------------------------------------------------------------------------------
  useMNC=.TRUE.,
  useDiagnostics=.TRUE.,
- useLayers=.TRUE.,
+ useLayers=.FALSE.,
  &

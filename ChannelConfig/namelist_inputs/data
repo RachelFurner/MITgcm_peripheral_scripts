@@ -94,8 +94,8 @@
 # Start from the beginning of time.
  nIter0=       0,
 # 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
- nTimeSteps =   144,
-#nTimeSteps =   5184001,
+# nTimeSteps =   144,
+ nTimeSteps =   5184001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
@@ -117,24 +117,24 @@
 # Dump file frequency.
 # in seconds, assuming 360 day years
 # Every 1 day.
-# dumpFreq= 86400.,
+ dumpFreq= 86400.,
 # Every 10 mins (i.e. each time step)
- dumpFreq= 600.,
+# dumpFreq= 600.,
 
 #-------------------------------------------------------------------------------
 # Averaging frequency.
 
 #  Every day.
-# taveFreq=   86400.,
+ taveFreq=   86400.,
 # Every 10 mins (i.e. each time step)
- taveFreq=   600.,
+# taveFreq=   600.,
 
 #-------------------------------------------------------------------------------
 # Monitor statistics frequency.
 
 # Every 10 days.
-# monitorFreq= 864000.,
- monitorFreq= 86400.,
+ monitorFreq= 864000.,
+# monitorFreq= 86400.,
 
 #-------------------------------------------------------------------------------
 # Forcing timescales - turn it all off.
