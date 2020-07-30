@@ -1,0 +1,161 @@
+# ====================
+# | Model parameters |
+# ====================
+#
+# 02/06/08 - Began modification from basic state 4x4 ocean lat/lon simulation
+#            data file. Split file up into neat sections. Remmed out all the
+#            forcing, except for surface restoring.
+#
+#-------------------------------------------------------------------------------
+# Continuous equation parameters
+
+ &PARM01
+ tRef = 19*0.,
+ sRef = 19*35.,
+# Vertical viscosity. 4 degree = 1.E-3
+ viscAr=1.E-3,
+# Horizontal viscosity.
+ viscAhgrid=0.0075,
+ diffKhT=0.,
+ diffKrT=3.E-5,
+ diffKhS=0.,
+ diffKrS=3.E-5,
+ rhonil=1035.,
+ rhoConstFresh=1000.,
+ eosType = 'JMD95Z',
+ ivdc_kappa=100.,
+ implicitDiffusion=.TRUE.,
+ exactConserv=.TRUE.,
+ useRealFreshWaterFlux=.TRUE.,
+ allowFreezing=.TRUE.,
+# turn on partial cells
+ hFacMin=0.1,
+ hFacMindr=50.,
+# set precision of data files
+ readBinaryPrec=32,
+# Set advection scheme for T & S.
+ tempAdvScheme=7,
+ saltAdvScheme=7,
+ staggerTimeStep=.TRUE.,
+ vectorInvariantMomentum=.TRUE.,
+ highOrderVorticity=.TRUE.,
+ useJamartWetPoints=.TRUE.,
+ useJamartMomAdv=.TRUE.,
+ &
+
+#-------------------------------------------------------------------------------
+# Elliptic solver parameters
+
+ &PARM02
+ cg2dMaxIters=100,
+ cg2dTargetResidual=1.E-7,
+ &
+
+#-------------------------------------------------------------------------------
+# Time stepping parameters
+
+ &PARM03
+# Start from the beginning of time.
+ nIter0=       0,
+# 100 yr run
+ nTimeSteps = 72001,
+#-------------------------------------------------------------------------------
+# 1 degree resolution timestepping.
+ deltaTmom = 900.,
+ deltaTtracer= 43200.,
+ deltaTClock = 43200.,
+ deltaTfreesurf= 43200.,
+#-------------------------------------------------------------------------------
+
+ abEps = 0.1,
+
+#-------------------------------------------------------------------------------
+# Permanent checkpointing.
+# in seconds, assuming 360 day years.
+
+# Every year.
+  pChkptFreq= 31104000.,
+# Every 20 years.
+# pChkptFreq= 622080000.,
+
+#-------------------------------------------------------------------------------
+# Dump file frequency.
+# state files. Again, in seconds, with 360 day years.
+#
+# Every day
+  dumpFreq=  86400.,
+# Every month
+# dumpFreq=  2592000.,
+# Every year
+# dumpFreq=  31104000.,
+#-------------------------------------------------------------------------------
+# Averaging frequency.
+#
+# Every day
+  taveFreq=  86400.,
+# Every month
+# taveFreq=  2592000.,
+# Every year (360 days).
+# taveFreq=   31104000.,
+
+#-------------------------------------------------------------------------------
+# Monitor statistics frequency.
+# useful file - has averaged quantities, mins, maxes etc. Again, seconds, 360 day year!
+# Decadally.
+# monitorFreq= 311040000.,
+# Monthly
+  monitorFreq=  2592000.,
+
+#-------------------------------------------------------------------------------
+# Forcing timescales.
+
+# 10 day restoring timescale for temperature
+ tauThetaClimRelax=  864000.,
+
+# 30 day restoring timescale for salinity
+ tauSaltClimRelax = 2592000.,
+
+# Periodic forcing settings.
+ periodicExternalForcing=.FALSE.,
+
+#-------------------------------------------------------------------------------
+# End of &PARM03.
+ &
+
+#-------------------------------------------------------------------------------
+# Gridding parameters
+
+ &PARM04
+ usingSphericalPolarGrid=.TRUE.,
+ ygOrigin=-60.0,
+ delR= 10., 10.1, 10.3, 10.8, 11.8, 13.4, 16., 19.8, 24.8, 31.1, 38.4,
+        46.5, 55., 63.5, 71.6, 78.2, 85.15, 90.2, 94.0, 96., 98.25, 99.25,
+        100., 101.3, 104.6, 110.3, 120.8, 137.1, 156.9, 177.8, 198.55, 218.5,
+        250., 250., 250., 250., 250., 250., 250., 250., 250., 250.,
+ delY=  1.0000, 1.0311, 1.0628, 1.0950, 1.1278, 1.1611, 1.1949, 1.2291,
+         1.2637, 1.2986, 1.3338, 1.3693, 1.4048, 1.4404, 1.4761, 1.5116,
+         1.5321, 1.5658, 1.5991, 1.6319, 1.6641, 1.6955, 1.7260, 1.7556,
+         1.7840, 1.8111, 1.8369, 1.8612, 1.8839, 1.9048, 1.9238, 1.9409,
+         1.9559, 1.9688, 1.9795, 1.9878, 1.9938, 1.9974, 1.9974, 1.9938,
+         1.9878, 1.9795, 1.9688, 1.9559, 1.9409, 1.9238, 1.9048, 1.8839,
+         1.8612, 1.8369, 1.8111, 1.7840, 1.7556, 1.7260, 1.6955, 1.6641,
+         1.6319, 1.5991, 1.5658, 1.5321, 1.5116, 1.4761, 1.4404, 1.4048,
+         1.3693, 1.3338, 1.2986, 1.2637, 1.2291, 1.1949, 1.1611, 1.1278,
+         1.0950, 1.0628, 1.0311, 1.0000, 1.0000, 1.0000,
+ delX=11*2.0,
+ &
+
+#-------------------------------------------------------------------------------
+# Input datasets
+
+ &PARM05
+ bathyFile=      'bathy.bin',
+ hydrogThetaFile='idl_t.bin',
+ hydrogSaltFile= 'idl_s.bin',
+ zonalWindFile=  'idl_tau.bin',
+ thetaClimFile=  'idl_sst.bin',
+ saltClimFile=   'idl_sss.bin',
+ the_run_name=   '2deg',
+ &
+
+#-------------------------------------------------------------------------------
