@@ -7,7 +7,7 @@
  mnc_outdir_str='mnc_output_',
 #mnc_outdir_date=.TRUE.,
  monitor_mnc=.TRUE.,
- timeave_mnc=.TRUE.,
+ timeave_mnc=.FALSE.,
  snapshot_mnc=.TRUE.,
  pickup_write_mnc=.FALSE.,
  pickup_read_mnc=.FALSE.,

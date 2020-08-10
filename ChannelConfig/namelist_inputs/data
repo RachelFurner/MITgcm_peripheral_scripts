@@ -93,9 +93,9 @@
  &PARM03
 # Start from the beginning of time.
  nIter0=       0,
-# 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+# 50 yr run (1 yr = 51840 dt => 1dt = 10 mins)
 # nTimeSteps =   144,
- nTimeSteps =   5184001,
+ nTimeSteps =  2592001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
@@ -110,14 +110,17 @@
 #-------------------------------------------------------------------------------
 # Permanent checkpointing.
 # in seconds, assuming 360 day years
-# Every 1 year.
- pChkptFreq= 31104000.,
+# Every 10 years.
+ pChkptFreq= 311040000.,
 
 #-------------------------------------------------------------------------------
 # Dump file frequency.
 # in seconds, assuming 360 day years
+# Every 50 years - using daily average output (through mydiag)
+# and so don't want state files taking up space
+  dumpFreq= 1555200000.,
 # Every 1 day.
- dumpFreq= 86400.,
+# dumpFreq= 86400.,
 # Every 10 mins (i.e. each time step)
 # dumpFreq= 600.,
 
@@ -125,16 +128,16 @@
 # Averaging frequency.
 
 #  Every day.
- taveFreq=   86400.,
+# taveFreq=   86400.,
 # Every 10 mins (i.e. each time step)
 # taveFreq=   600.,
 
 #-------------------------------------------------------------------------------
 # Monitor statistics frequency.
-
-# Every 10 days.
- monitorFreq= 864000.,
-# monitorFreq= 86400.,
+# Every 10 years.
+ monitorFreq= 311040000.,
+# Every 30 days.
+# monitorFreq= 2592000.,
 
 #-------------------------------------------------------------------------------
 # Forcing timescales - turn it all off.
