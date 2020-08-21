@@ -93,9 +93,10 @@
  &PARM03
 # Start from the beginning of time.
  nIter0=       0,
+# 10 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+ nTimeSteps = 518401,
 # 50 yr run (1 yr = 51840 dt => 1dt = 10 mins)
-# nTimeSteps =   144,
- nTimeSteps =  2592001,
+# nTimeSteps =  2592001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
