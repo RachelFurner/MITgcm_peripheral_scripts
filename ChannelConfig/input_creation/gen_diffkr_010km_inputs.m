@@ -80,10 +80,12 @@ pi = 4.0*atan( 1.0 );
 % Specify the parameters that define the channel dimensions.
 
 % Length of the channel.
-Lx = 9600.E3;
+%Lx = 9600.E3;
+Lx = 2400.E3;
 
 % Width of the channel.
-Ly = 2000.E3;
+%Ly = 2000.E3;
+Ly = 1000.E3;
 
 % Depth of the channel.
 Lz = 5000.;
@@ -94,8 +96,8 @@ ny = Ly/dy + ky;
 nz = 38;
 
 % Calculate the x and y locations of the tracer points.
-x = repmat( dx*( (1:1:nx)'-0.5 ) - 4800.E3, [ 1 ny nz ] );
-y = repmat( dy*( (1:1:ny)-0.5 ) - 1000.E3, [ nx 1 nz ] );
+x = repmat( dx*( (1:1:nx)'-0.5 ) - 0.5*Lx, [ 1 ny nz ] );
+y = repmat( dy*( (1:1:ny)-0.5 ) - 0.5*Ly, [ nx 1 nz ] );
 
 % Calculate the Coriolis frequency, normalised by f0.
 f = ( -1.11E-4 + 1.47E-11*y(:,:,1) ) / -1.11E-4;
@@ -166,7 +168,7 @@ mask( :, :, 1 ) = 1.;
 
 % Linear gradient at surface with exponential decay at depth and 0oC at
 % the southern boundary (similar to Abernathey et al., 2011).
-t = dtheta * ( (y+1000.E3)/2000.E3 ) .* ( exp( z/z0 ) - exp( -Lz/z0 ) ) / ...
+t = dtheta * ( (y+.5*Ly)/Ly ) .* ( exp( z/z0 ) - exp( -Lz/z0 ) ) / ...
     ( 1. - exp( -Lz/z0 ) );
 
 %% ------------------------------------------------------------------------
@@ -197,17 +199,23 @@ tauy = 0.25*tau0*exp( -0.5*x( :, :, 1 ).*x( :, :, 1 )/250000.E6 );
 
 hflux = -hflux0*sin( pi*y( :, :, 1 )/Ly );
 
-%% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
 % Generate the spatially varying diapycnal diffusivity.
 
 diffkr = 1.E-5*ones(nx,ny,nz);
 
 % Increase the diapycnal diffusivity in the sponge regions.
+%peak_diff = 5.E-3
+peak_diff = 10.E-3
+%increased_diff_length = 150.E3
+increased_diff_length = 75.E3
+disp(Ly/2 - increased_diff_length)
+
 for j = 1:1:ny;
-  if y( 1, j ) > 850.E3
+  if y( 1, j ) > (Ly/2 - increased_diff_length)
       diffkr( :, j, : ) = 1.E-5 ...
-          + 0.5*5.E-3*( 1 + cos( pi*( y(:,j,:) - 1000.E3 )/150.E3 ) ) ...
-          - 0.5*1.E-5*( 1 + cos( pi*( y(:,j,:) - 1000.E3 )/150.E3 ) );
+          + 0.5*peak_diff*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) ) ...
+          - 0.5*1.E-5*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) );
   end;
 end;
 
