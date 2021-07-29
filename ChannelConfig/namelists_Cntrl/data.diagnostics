@@ -35,13 +35,13 @@
 #   fields(1,4) = 'DICBIOA ', 'DICCARB ',
 # TIME AVERAGE DIAGNOSTIC OUTPUT #
 # My standard diagnostics - do time averaged daily outputting.
-  frequency(1) = 86400.,
+  frequency(1) = 43200.,
    timephase(1) = 0.,
    filename(1)  = 'daily_ave_3d',
    fields(1,1)  = 'THETA   ', 'SALT    ', 'UVEL    ', 'VVEL    ', 'WVEL    ',
 #                  'GM_Kwx  ', 'GM_Kwy  ', 'GM_kwz  ',
 # My standard diagnostics - do time averaged daily outputting.
-  frequency(2) = 86400.,
+  frequency(2) = 43200.,
    timephase(2) = 0.,
    filename(2)  = 'daily_ave_2d',
    fields(1,2)  = 'ETAN    ',

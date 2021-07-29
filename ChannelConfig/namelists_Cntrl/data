@@ -69,7 +69,7 @@
  useJamartWetPoints=.TRUE.,
  useJamartMomAdv=.TRUE.,
 # Set lateral boundary conditions.
- no_slip_sides=.TRUE.,
+ no_slip_sides=.FALSE.,
  no_slip_bottom=.TRUE.,
  bottomDragLinear=1.1E-3,
 # Turn on implicit vertical diffusion for convection.
@@ -91,12 +91,12 @@
 # Time stepping parameters
 
  &PARM03
-# Start from the beginning of time.
- nIter0=       0,
-# 10 yr run (1 yr = 51840 dt => 1dt = 10 mins)
- nTimeSteps = 518401,
+# Start from spun up fields
+ nIter0= 2592000,
+# 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+# nTimeSteps = 5184001,
 # 50 yr run (1 yr = 51840 dt => 1dt = 10 mins)
-# nTimeSteps =  2592001,
+ nTimeSteps =  2592001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
@@ -135,15 +135,15 @@
 
 #-------------------------------------------------------------------------------
 # Monitor statistics frequency.
-# Every 10 years.
- monitorFreq= 311040000.,
+# Every 1 year.
+ monitorFreq= 31104000.,
 # Every 30 days.
 # monitorFreq= 2592000.,
 
 #-------------------------------------------------------------------------------
 # Forcing timescales - turn it all off.
 
-# tauThetaClimRelax=864000.,
+ tauThetaClimRelax=864000.,
 # tauSaltClimRelax =0.,
  periodicExternalForcing=.FALSE.,
 
@@ -162,8 +162,8 @@
       78.5812, 89.3874, 101.6795, 115.6621, 131.5674, 149.6600, 170.2406,
       193.6514, 220.8552, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 
       250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000, 250.0000
- xgOrigin=-4800.E3,
- ygOrigin=-1000.E3,
+ xgOrigin=-1200.E3,
+ ygOrigin=-500.E3,
  dYspacing=10.E3,
  dXspacing=10.E3,
  &
@@ -176,10 +176,10 @@
  hydrogThetaFile='noisyt.bin',
  hydrogSaltFile= '',
  zonalWindFile=  'tau.bin',
- thetaClimFile=  '',
+ thetaClimFile=  'noisytSurf.bin',
  saltClimFile=   '',
  diffKrFile=     'diffkr.bin',
- the_run_name=   'Channel Model',
+ the_run_name=   'ChannelModel',
  &
 
 #-------------------------------------------------------------------------------
