@@ -28,8 +28,8 @@ format = 'b';
 
 % Select bathymetry options.
 ridge = 0;
-north = 0;
-south = 0;
+north = 1;
+south = 1;
 
 %% ------------------------------------------------------------------------
 % Problem dependent parameters.
@@ -54,8 +54,8 @@ Lr = 500.E3;
 Hr = 0.;
 
 % Latitudinal extent of the barriers.
-LbN = 0.   %LbN = 1000.E3; % Barrier extending south from Northern boundary.
-LbS = 0.   %LbS = 1000.E3; % Barrier externing north from Southern boundary,
+LbN = 300.E3   %LbN = 1000.E3; % Barrier extending south from Northern boundary.
+LbS = 300.E3   %LbS = 1000.E3; % Barrier externing north from Southern boundary,
 
 %% ------------------------------------------------------------------------
 % Grid spacing in degrees and the number of vertical levels.
@@ -142,19 +142,19 @@ end;
 % Add continent to southern boundary.
 if south
     by = LbS/dy;
-    depth( 231:250, 1:by ) = 0.;
+    depth( 55:60, 1+ky_south:by+ky_south ) = 0.;
+    disp(1+ky_south);
+    disp(by+ky_south);
 end;
-
 % Add continent to the northern boundary.
 if north
-    by = ( Ly - LbN )/dy;
-    depth( 711:730, by:end ) = 0.; % This line gives the northern boundary ridge 1 grid box more than it should be in y, but is consistent with so-010km-diffkr expts.
-%    depth( 711:730, by+1:end ) = 0.; % This line makes the northern boundary ridge the correct extent, but is inconsistent with so-010km-diffkr expts.
+    by = LbN/dy;
+    depth( 170:175, end-ky_north-by+1:end-ky_north ) = 0.;
+    disp(-ky_north-by+1);
+    disp(-ky_north);
 end;
-
 % Put a solid wall on the northern boundary.
 depth( :, end-ky_north+1:end ) = 0.;
-
 % Put a solid wall on the southern boundary.
 depth( :, 1:ky_south ) = 0.;
 %% ------------------------------------------------------------------------
@@ -186,7 +186,7 @@ for k = 1:1:nz;
     noisyt( :, :, k ) = awgn( t( :, :, k ), 30 );
 end;
 
-% Make sure there is no water colder than 0.5oC.
+% Make sure there is no water colder than 0.25oC.
 %noisyt( noisyt < 0.25 ) = 0.25;
 
 %% ------------------------------------------------------------------------
@@ -207,23 +207,24 @@ hflux = -hflux0*sin( pi*y( :, :, 1 )/Ly );
 
 diffkr = 1.E-5*ones(nx,ny,nz);
 
-% Increase the diapycnal diffusivity in the northern sponge regions.
-%peak_diff = 5.E-3
-peak_diff = 10.E-3
-%increased_diff_length = 150.E3
-increased_diff_length = 75.E3
-
-disp(Ly/2 - increased_diff_length)
-
-for j = 1:1:ny;
-  if y( 1, j ) > (Ly/2 - increased_diff_length)  % Want peak at land edge (490)
-      %disp(y(1,j))
-      diffkr( :, j, : ) = 1.E-5 ...
-          + 0.5*peak_diff*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) ) ...
-          - 0.5*1.E-5*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) );
-      %disp(diffkr(1,j,1))
-  end;
-end;
+% RF - I don't think we want this, as want it to mimic actual land...
+% % Increase the diapycnal diffusivity in the northern sponge regions.
+% %peak_diff = 5.E-3
+% peak_diff = 10.E-3
+% %increased_diff_length = 150.E3
+% increased_diff_length = 75.E3
+% 
+% disp(Ly/2 - increased_diff_length)
+% 
+% for j = 1:1:ny;
+%   if y( 1, j ) > (Ly/2 - increased_diff_length)  % Want peak at land edge (490)
+%       %disp(y(1,j))
+%       diffkr( :, j, : ) = 1.E-5 ...
+%           + 0.5*peak_diff*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) ) ...
+%           - 0.5*1.E-5*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) );
+%       %disp(diffkr(1,j,1))
+%   end;
+% end;
 
 %% ------------------------------------------------------------------------
 
