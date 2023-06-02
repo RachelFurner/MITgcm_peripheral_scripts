@@ -13,12 +13,11 @@
  &diagnostics_list
 # INSTANTANEOUS DIAGNOSTIC OUTPUT #
 # My standard diagnostics.
-  frequency(1) = -6220800000.,
-   timephase(1) = 0.,
-   filename(1)  = 'diag',
-   fields(1,1)  = 'UVELTH', 'VVELTH', 'WVELTH', 'TOTTTEND',
-                  'ADVr_TH', 'ADVx_TH', 'ADVy_TH',
-                  'DFrE_TH', 'DFxE_TH', 'DFyE_TH', 'DFrI_TH',
+#  frequency(1) = -6220800000.,
+#   timephase(1) = 0.,
+#   filename(1)  = 'diag',
+#   fields(1,1)  = 'CONVADJ ', 'WRHOMASS', 'VRHOMASS',
+#                  'RHOAnoma', 'momVort3',
 # My user-defined diagnostics.
 #  frequency(2) = -311040000.,
 #   timephase(2) = 0.,
@@ -35,12 +34,17 @@
 #   filename(4) = 'dic_diag',
 #   fields(1,4) = 'DICBIOA ', 'DICCARB ',
 # TIME AVERAGE DIAGNOSTIC OUTPUT #
-# My standard diagnostics.
-#  frequency(5) = 31104000.,
-#   timephase(5) = 0.,
-#   filename(5)  = 'dave',
-#   fields(1,5)  = 'CONVADJ ', 'GM_Kwx  ', 'GM_Kwy  ', 'WRHOMASS', 'VRHOMASS',
-#                   'RHOAnoma', 'momVort3',
+# My standard diagnostics - do hourly averaged outputting.
+  frequency(3) = 3600.,
+   timephase(3) = 0.,
+   filename(3)  = '12hrly_3d',
+   fields(1,3)  = 'THETA   ', 'UVEL    ', 'VVEL    ',
+# My standard diagnostics - do hourly averaged outputting.
+  frequency(4) = 3600.,
+   timephase(4) = 0.,
+   filename(4)  = '12hrly_2d',
+   fields(1,4)  = 'ETAN    ', 'oceTAUX ',
+                  'gT_Forc ',
 # My user-defined diagnostics.
 #  frequency(6) = 31104000.,
 #   timephase(6) = 0.,

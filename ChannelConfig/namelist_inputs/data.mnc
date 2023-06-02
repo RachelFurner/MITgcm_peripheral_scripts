@@ -9,8 +9,8 @@
  monitor_mnc=.TRUE.,
  timeave_mnc=.FALSE.,
  snapshot_mnc=.TRUE.,
- pickup_write_mnc=.FALSE.,
- pickup_read_mnc=.FALSE.,
+ pickup_write_mnc=.TRUE.,
+ pickup_read_mnc=.TRUE.,
  readgrid_mnc=.TRUE.,
  &
 # Note: Some systems use & as the

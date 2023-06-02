@@ -91,17 +91,16 @@
 # Time stepping parameters
 
  &PARM03
-# Start from spun up fields
- nIter0= 2592000,
-# 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
-# nTimeSteps = 5184001,
-# 50 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+# dt = 600 seconds, see below!
+# Start from the beginning of time.
+ nIter0=       0,
+# 50 yr run
  nTimeSteps =  2592001,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
 #-------------------------------------------------------------------------------
-# 10km grid spacing resolution timestepping.
+# 10km grid spacing resolution timestepping in seconds
  deltaT=600.,
 
 #-------------------------------------------------------------------------------
@@ -111,8 +110,8 @@
 #-------------------------------------------------------------------------------
 # Permanent checkpointing.
 # in seconds, assuming 360 day years
-# Every 10 years.
- pChkptFreq= 311040000.,
+# After full 50 years. (run is quick, so no need for much checkpointing)
+ pChkptFreq= 1555200000.,
 
 #-------------------------------------------------------------------------------
 # Dump file frequency.

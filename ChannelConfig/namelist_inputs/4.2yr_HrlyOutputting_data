@@ -95,8 +95,8 @@
  nIter0= 2592000,
 # 100 yr run (1 yr = 51840 dt => 1dt = 10 mins)
 # nTimeSteps = 5184001,
-# 50 yr run (1 yr = 51840 dt => 1dt = 10 mins)
- nTimeSteps =  2592001,
+# 4.2 yr run (1 yr = 51840 dt => 1dt = 10 mins)
+ nTimeSteps =  217729,
 # Turn off convective adjustment.
  cAdjFreq=0.,
 
