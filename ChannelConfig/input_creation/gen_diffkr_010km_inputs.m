@@ -35,7 +35,7 @@ south = 0;
 % Problem dependent parameters.
 
 % Choose the amplitude of the temperature variations.
-dtheta = 15.;
+dtheta = 7.;
 
 % Choose the wind stress magnitude.
 tau0 = 0.20;
@@ -71,7 +71,8 @@ dz = [ 10.0000, 11.3752, 12.9394, 14.7188, 16.7429, 19.0453, 21.6643, ...
   
 % Specify the number of extra grid points to have outside of the channel.
 kx = 0;
-ky = 8;
+ky_north = 3;
+ky_south = 3;
 
 % pi to machine precision.
 pi = 4.0*atan( 1.0 );
@@ -85,19 +86,19 @@ Lx = 2400.E3;
 
 % Width of the channel.
 %Ly = 2000.E3;
-Ly = 1000.E3;
+Ly = 980.E3;
 
 % Depth of the channel.
 Lz = 5000.;
 
 % Set the number of grid boxes.
 nx = Lx/dx + kx;
-ny = Ly/dy + ky;
+ny = Ly/dy + ky_north + ky_south;
 nz = 38;
 
 % Calculate the x and y locations of the tracer points.
 x = repmat( dx*( (1:1:nx)'-0.5 ) - 0.5*Lx, [ 1 ny nz ] );
-y = repmat( dy*( (1:1:ny)-0.5 ) - 0.5*Ly, [ nx 1 nz ] );
+y = repmat( dy*( (1:1:ny)-0.5 ) - 0.5*Ly-ky_south*dy, [ nx 1 nz ] );
 
 % Calculate the Coriolis frequency, normalised by f0.
 f = ( -1.11E-4 + 1.47E-11*y(:,:,1) ) / -1.11E-4;
@@ -152,8 +153,10 @@ if north
 end;
 
 % Put a solid wall on the northern boundary.
-depth( :, end-ky+1:end ) = 0.;
+depth( :, end-ky_north+1:end ) = 0.;
 
+% Put a solid wall on the southern boundary.
+depth( :, 1:ky_south ) = 0.;
 %% ------------------------------------------------------------------------
 % Generate the spatially varying restoring mask.
 
@@ -204,18 +207,21 @@ hflux = -hflux0*sin( pi*y( :, :, 1 )/Ly );
 
 diffkr = 1.E-5*ones(nx,ny,nz);
 
-% Increase the diapycnal diffusivity in the sponge regions.
+% Increase the diapycnal diffusivity in the northern sponge regions.
 %peak_diff = 5.E-3
 peak_diff = 10.E-3
 %increased_diff_length = 150.E3
 increased_diff_length = 75.E3
+
 disp(Ly/2 - increased_diff_length)
 
 for j = 1:1:ny;
-  if y( 1, j ) > (Ly/2 - increased_diff_length)
+  if y( 1, j ) > (Ly/2 - increased_diff_length)  % Want peak at land edge (490)
+      %disp(y(1,j))
       diffkr( :, j, : ) = 1.E-5 ...
           + 0.5*peak_diff*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) ) ...
           - 0.5*1.E-5*( 1 + cos( pi*( y(:,j,:) - .5*Ly )/increased_diff_length ) );
+      %disp(diffkr(1,j,1))
   end;
 end;
 
@@ -345,6 +351,21 @@ if output;
 end;
 
 %% ------------------------------------------------------------------------
+% Read out the SURFACE FIELD of the noisy intital temperature to binary file.
+
+if output;
+    %out_file = fullfile( name.directory, name.problem, 'input/noisyt.bin' );
+    out_file = 'noisytSurf.bin'
+    % Open the file for writing only.
+    [ fid message ] = fopen( out_file, 'w', format );
+    % Reshape the bathymetry into a single column.
+    output_data = reshape( noisyt( :, :, 1 ), nx*ny, 1 );
+    %Write it out.
+    fwrite( fid, output_data, 'float32' );
+    % Close the file.
+    fclose( fid );
+end;
+%% ------------------------------------------------------------------------
 % Read out the wind stress to binary file.
 
 if output;
@@ -361,18 +382,18 @@ if output;
 end;
 
 %% ------------------------------------------------------------------------
-% Read out the surface heat flux to binary file.
-
-%if output;
-%    out_file = fullfile( name.directory, name.problem, 'input/hflux.bin' );
-%    % Open the file for writing only.
-%    [ fid message ] = fopen( out_file, 'w', format );
-%    % Reshape the bathymetry into a single column.
-%    output_data = reshape( hflux, nx*ny, 1 );
-%    %Write it out.
-%    fwrite( fid, output_data, 'float32' );
-%    % Close the file.
-%    fclose( fid );
-%end;
+% % Read out the surface heat flux to binary file.
+% 
+% if output;
+%     out_file = fullfile( name.directory, name.problem, 'input/hflux.bin' );
+%     % Open the file for writing only.
+%     [ fid message ] = fopen( out_file, 'w', format );
+%     % Reshape the bathymetry into a single column.
+%     output_data = reshape( hflux, nx*ny, 1 );
+%     %Write it out.
+%     fwrite( fid, output_data, 'float32' );
+%     % Close the file.
+%     fclose( fid );
+% end;
 
 %% ------------------------------------------------------------------------
